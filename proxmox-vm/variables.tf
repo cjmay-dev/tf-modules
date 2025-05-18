@@ -23,7 +23,27 @@ variable "ANSIBLE_SSH_PUBLIC_KEY" {
     type        = string
 }
 
+variable "CPU_CORES" {
+    description = "Number of CPU cores for the VM"
+    type        = string
+}
+
+variable "MEMORY" {
+    description = "Memory size for the VM in MB"
+    type        = string
+}
+
+variable "DISK_SIZE" {
+    description = "Size of the VM disk in GB"
+    type        = string
+}
+
 variable "DATASTORE_ID" {
     description = "ID of the datastore where the VM disk will be created"
+    type        = string
+}
+
+variable "NETWORK_BRIDGE" {
+    description = "Name of the network bridge to use for the VM"
     type        = string
 }

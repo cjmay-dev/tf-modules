@@ -6,19 +6,18 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
     enabled = true
   }
   cpu {
-    cores = 2
+    cores = var.CPU_CORES
     type  = "host"
   }
   memory {
-    dedicated = 4096
-    floating  = 4096
+    dedicated = var.MEMORY
+    floating  = var.MEMORY
   }
   disk {
     datastore_id = var.DATASTORE_ID
-    file_id      = proxmox_virtual_environment_download_file.ubuntu_cloud_image.id
+    file_format  = "qcow2"
     interface    = "scsi0"
-    iothread     = true
-    size         = 64
+    size         = var.DISK_SIZE
   }
   initialization {
     ip_config {
@@ -29,7 +28,7 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
     user_data_file_id = proxmox_virtual_environment_file.user_data_cloud_config.id
   }
   network_device {
-    bridge = "vmbr1"
+    bridge = var.NETWORK_BRIDGE
   }
   operating_system {
     type = "l26"  # Linux 2.6 - 6.x
@@ -38,7 +37,6 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
     datastore_id = var.DATASTORE_ID
     version = "v2.0"
   }
-
 }
 
 resource "proxmox_virtual_environment_download_file" "ubuntu_cloud_image" {
@@ -46,8 +44,4 @@ resource "proxmox_virtual_environment_download_file" "ubuntu_cloud_image" {
   datastore_id = "local"
   node_name    = "pve"
   url = "https://cloud-images.ubuntu.com/jammy/current/jammy-server-cloudimg-amd64.img"
-}
-
-output "vm_ipv4_address" {
-  value = proxmox_virtual_environment_vm.ubuntu_vm.ipv4_addresses[1][0]
 }
