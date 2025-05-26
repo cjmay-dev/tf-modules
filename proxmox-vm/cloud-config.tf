@@ -15,7 +15,7 @@ resource "proxmox_virtual_environment_file" "user_data_cloud_config" {
           - sudo
         shell: /bin/bash
         ssh_authorized_keys:
-          - ${trimspace(data.local_file.admin_ssh_public_key.content)}
+          - ${var.ADMIN_SSH_PUBLIC_KEY}
       - name: ansible
         gecos: Ansible User
         groups:
@@ -23,12 +23,12 @@ resource "proxmox_virtual_environment_file" "user_data_cloud_config" {
         sudo: "ALL=(ALL) NOPASSWD:ALL"
         shell: /bin/bash
         ssh_authorized_keys:
-          - ${trimspace(data.local_file.ansible_ssh_public_key.content)}
+          - ${var.ANSIBLE_SSH_PUBLIC_KEY}
     chpasswd:
       expire: false
       users:
         - {name: root, type: RANDOM}
-        - {name: ${var.ADMIN_USERNAME, type: RANDOM}
+        - {name: ${var.ADMIN_USERNAME}, type: RANDOM}
         - {name: ansible, type: RANDOM}
     allow_public_ssh_keys: true
     ssh_pwauth: false
@@ -69,12 +69,4 @@ resource "proxmox_virtual_environment_file" "user_data_cloud_config" {
 
     file_name = "user-data-cloud-config.yaml"
   }
-}
-
-data "local_file" "admin_ssh_public_key" {
-  filename = "./admin.pub"
-}
-
-data "local_file" "ansible_ssh_public_key" {
-  filename = "./ansible.pub"
 }
