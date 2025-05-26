@@ -1,4 +1,4 @@
-variable "APP_SECRETS" = {
+variable "APP_SECRETS" {
     type = map(string)
 }
 
