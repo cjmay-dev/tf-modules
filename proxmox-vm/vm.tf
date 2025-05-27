@@ -1,5 +1,5 @@
 resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
-  name      = vars.APP_SHORTNAME
+  name      = var.APP_SHORTNAME
   tags      = ["terraform", "docker"]
   node_name = "pve"
   agent {
