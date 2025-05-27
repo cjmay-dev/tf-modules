@@ -15,5 +15,9 @@ provider "proxmox" {
   ssh {
     agent = false
     username = "root"
+    node {
+      name = "pve"
+      address = var.PVE_HOST
+    }
   }
 }
