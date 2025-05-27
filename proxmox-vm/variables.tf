@@ -1,3 +1,8 @@
+variable "PVE_HOST" {
+    description = "Proxmox VE host IP or FQDN"
+    type        = string
+}
+
 variable "APP_SHORTNAME" {
     description = "Subdomain where the app is hosted"
     type        = string
