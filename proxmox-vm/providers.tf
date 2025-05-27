@@ -13,7 +13,7 @@ provider "proxmox" {
   # PROXMOX_VE_API_TOKEN
   # PROXMOX_VE_INSECURE  # self-signed TLS cert in use
   ssh {
-    agent = true
+    agent = false
     username = "root"
   }
 }
