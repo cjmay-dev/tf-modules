@@ -29,15 +29,15 @@ resource "b2_bucket" "backups" {
     file_name_prefix             = "keys/"
     days_from_hiding_to_deleting = 90  
   }
-  lifecycle_rules {
-    file_name_prefix             = "snapshots/"
-    days_from_hiding_to_deleting = 90  
-  }
   # remove old locks without relying on client to do so
   lifecycle_rules {
     file_name_prefix              = "locks/"
     days_from_uploading_to_hiding = 1
     days_from_hiding_to_deleting  = 1  
+  }
+  lifecycle_rules {
+    file_name_prefix             = "snapshots/"
+    days_from_hiding_to_deleting = 90  
   }
 }
 
