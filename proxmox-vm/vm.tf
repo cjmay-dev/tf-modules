@@ -15,9 +15,10 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
   }
   disk {
     datastore_id = var.DATASTORE_ID
-    file_format  = "qcow2"
+    file_format  = "raw"
     interface    = "scsi0"
     size         = var.DISK_SIZE
+    ssd          = true
   }
   initialization {
     ip_config {
