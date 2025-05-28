@@ -15,9 +15,10 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
   }
   disk {
     datastore_id = var.DATASTORE_ID
-    file_format  = "raw"
+    file_id      = proxmox_virtual_environment_download_file.ubuntu_cloud_image.id
     interface    = "scsi0"
     size         = var.DISK_SIZE
+    discard      = "on"
     ssd          = true
   }
   initialization {
