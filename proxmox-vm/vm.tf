@@ -32,6 +32,8 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
   network_device {
     bridge = var.NETWORK_BRIDGE
   }
+  serial_device {
+  }
   operating_system {
     type = "l26"  # Linux 2.6 - 6.x
   }

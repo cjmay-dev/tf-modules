@@ -62,6 +62,8 @@ resource "proxmox_virtual_environment_file" "user_data_cloud_config" {
     runcmd:
       - systemctl enable qemu-guest-agent
       - systemctl start qemu-guest-agent
+      - systemctl enable serial-getty@ttyS0.service
+      - systemctl start serial-getty@ttyS0.service
       - echo "Defaults env_keep+=SSH_AUTH_SOCK" >> /etc/sudoers
       - sed -i '1 i\auth sufficient pam_ssh_agent_auth.so file=~/.ssh/authorized_keys' /etc/pam.d/sudo
       - cat 'net.ipv4.conf.all.forwarding=1' > /etc/sysctl.d/enabled_ipv4_forwarding.conf
