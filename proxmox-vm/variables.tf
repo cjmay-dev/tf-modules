@@ -28,6 +28,11 @@ variable "ANSIBLE_SSH_PUBLIC_KEY" {
     type        = string
 }
 
+variable "ROOT_HASHED_PASSWORD" {
+    description = "Hashed password for the root user"
+    type        = string
+}
+
 variable "CPU_CORES" {
     description = "Number of CPU cores for the VM"
     type        = string

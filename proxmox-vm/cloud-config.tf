@@ -28,7 +28,7 @@ resource "proxmox_virtual_environment_file" "user_data_cloud_config" {
     chpasswd:
       expire: false
       users:
-        - {name: root, type: RANDOM}
+        - {name: root, password: ${var.ROOT_HASHED_PASSWORD}}
         - {name: ${var.ADMIN_USERNAME}, type: RANDOM}
         - {name: ansible, type: RANDOM}
     allow_public_ssh_keys: true
@@ -62,8 +62,8 @@ resource "proxmox_virtual_environment_file" "user_data_cloud_config" {
     runcmd:
       - systemctl enable qemu-guest-agent
       - systemctl start qemu-guest-agent
-      - sed -i 's/auth/# auth/g' /etc/pam.d/sudo
-      - sed -i '1 i\auth       required   pam_ssh_agent_auth.so allow_user_owned_authorized_keys_file' /etc/pam.d/sudo
+      - echo "Defaults env_keep+=SSH_AUTH_SOCK" >> /etc/sudoers
+      - sed -i '1 i\auth sufficient pam_ssh_agent_auth.so file=~/.ssh/authorized_keys' /etc/pam.d/sudo
       - cat 'net.ipv4.conf.all.forwarding=1' > /etc/sysctl.d/enabled_ipv4_forwarding.conf
       - echo "done" > /tmp/cloud-config.done
     EOF
