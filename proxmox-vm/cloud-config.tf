@@ -35,7 +35,6 @@ resource "proxmox_virtual_environment_file" "user_data_cloud_config" {
     ssh_pwauth: false
     disable_root: true
     apt:
-      http_proxy: "http://aptcache.${var.LOCAL_DOMAIN}:3142"
       sources:
         docker.list:
           source: "deb [arch=amd64] http://download.docker.com/linux/ubuntu $RELEASE stable"
