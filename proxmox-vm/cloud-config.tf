@@ -1,3 +1,19 @@
+resource "proxmox_virtual_environment_file" "meta_data_cloud_config" {
+  content_type = "snippets"
+  datastore_id = "local"
+  node_name    = "pve"
+  overwrite    = true
+
+  source_raw {
+    data = <<-EOF
+    #cloud-config
+    local-hostname: ${var.APP_SHORTNAME}
+    EOF
+
+    file_name = "meta-data-cloud-config.yaml"
+  }
+}
+
 resource "proxmox_virtual_environment_file" "user_data_cloud_config" {
   content_type = "snippets"
   datastore_id = "local"
