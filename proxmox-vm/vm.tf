@@ -1,4 +1,4 @@
-resource "proxmox_virtual_environment_volume" "data_vm" {
+resource "proxmox_virtual_environment_vm" "data_vm" {
   lifecycle {
     prevent_destroy = true
   }
