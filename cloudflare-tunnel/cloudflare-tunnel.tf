@@ -10,7 +10,6 @@ resource "cloudflare_zero_trust_tunnel_cloudflared" "tunnel" {
     # requires Account.Cloudflare-Tunnel Edit permission
     account_id    = var.CLOUDFLARE_ACCOUNT_ID
     name          = "${local.subdomain}.${var.CLOUDFLARE_DOMAIN}"
-    config_src    = "local"
     secret = base64sha256(random_password.tunnel_secret.result)
 }
 
