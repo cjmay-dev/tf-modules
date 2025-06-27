@@ -2,6 +2,7 @@ resource "proxmox_virtual_environment_vm" "data_vm" {
   lifecycle {
     prevent_destroy = true
   }
+  node_name = var.NODE_NAME
   started = false
   on_boot = false
 
@@ -20,7 +21,7 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
   }
   name      = var.APP_SHORTNAME
   tags      = ["terraform", "docker"]
-  node_name = "pve"
+  node_name = var.NODE_NAME
   agent {
     enabled = true
   }

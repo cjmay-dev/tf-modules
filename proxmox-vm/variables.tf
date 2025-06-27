@@ -3,6 +3,11 @@ variable "PVE_HOST" {
     type        = string
 }
 
+variable "NODE_NAME" {
+    description = "Name of the Proxmox node where the VM will be created"
+    type        = string
+}
+
 variable "APP_SHORTNAME" {
     description = "Subdomain where the app is hosted"
     type        = string
