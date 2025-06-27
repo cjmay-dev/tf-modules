@@ -1,4 +1,8 @@
 resource "b2_bucket" "backups" {
+  lifecycle {
+    prevent_destroy = true  # Prevent accidental deletion of backups
+  }
+
   bucket_name = "${var.ORG_SHORTNAME}-${var.APP_SHORTNAME}-backup-${var.ENV_SLUG}"
   bucket_type = "allPrivate"
 
