@@ -17,6 +17,21 @@ resource "proxmox_virtual_environment_file" "meta_data_cloud_config" {
   }
 }
 
+resource "tls_private_key" "ansible_ssh_key" {
+  lifecycle {
+    ignore_changes = all
+  }
+  algorithm = "ED25519"
+}
+
+resource "random_password" "ansible_password" {
+  lifecycle {
+    ignore_changes = all
+  }
+  length  = 32
+  special = true
+}
+
 resource "proxmox_virtual_environment_file" "user_data_cloud_config" {
   lifecycle {
     ignore_changes = all
@@ -46,13 +61,13 @@ resource "proxmox_virtual_environment_file" "user_data_cloud_config" {
         sudo: "ALL=(ALL) NOPASSWD:ALL"
         shell: /bin/bash
         ssh_authorized_keys:
-          - ${var.ANSIBLE_SSH_PUBLIC_KEY}
+          - ${tls_private_key.ansible_ssh_key.public_key_openssh}
     chpasswd:
       expire: false
       users:
-        - {name: root, password: ${var.ROOT_HASHED_PASSWORD}}
+        - {name: root, type: RANDOM}
         - {name: ${var.ADMIN_USERNAME}, type: RANDOM}
-        - {name: ansible, type: RANDOM}
+        - {name: ansible, password: "${random_password.ansible_password.result}"}
     allow_public_ssh_keys: true
     ssh_pwauth: false
     disable_root: true
@@ -67,6 +82,10 @@ resource "proxmox_virtual_environment_file" "user_data_cloud_config" {
       - libpam-ssh-agent-auth
       - net-tools
       - htop
+      - python3
+      - python3-pip
+      - python3-setuptools
+      - python3-six
     drivers:
       nvidia:
         license-accepted: true
