@@ -1,6 +1,6 @@
 resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
   lifecycle {
-    ignore_changes = [ all ]
+    ignore_changes = all
     prevent_destroy = true
   }
   name      = var.APP_SHORTNAME
@@ -50,7 +50,7 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
 
 resource "proxmox_virtual_environment_download_file" "ubuntu_cloud_image" {
   lifecycle {
-    ignore_changes = [ all ]
+    ignore_changes = all
   }
   content_type = "iso"
   datastore_id = "local"

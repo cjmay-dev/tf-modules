@@ -1,6 +1,6 @@
 resource "proxmox_virtual_environment_file" "meta_data_cloud_config" {
   lifecycle {
-    ignore_changes = [ all ]
+    ignore_changes = all
   }
   content_type = "snippets"
   datastore_id = "local"
@@ -19,7 +19,7 @@ resource "proxmox_virtual_environment_file" "meta_data_cloud_config" {
 
 resource "proxmox_virtual_environment_file" "user_data_cloud_config" {
   lifecycle {
-    ignore_changes = [ all ]
+    ignore_changes = all
   }
   content_type = "snippets"
   datastore_id = "local"
