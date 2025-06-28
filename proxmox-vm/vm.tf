@@ -1,23 +1,7 @@
-resource "proxmox_virtual_environment_vm" "data_vm" {
-  lifecycle {
-    prevent_destroy = true
-  }
-  node_name = var.NODE_NAME
-  started = false
-  on_boot = false
-
-  disk {
-    datastore_id = var.DATASTORE_ID
-    interface    = "scsi0"
-    size         = var.DISK_SIZE
-    discard      = "on"
-    ssd          = true
-  }
-}
-
 resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
   lifecycle {
-    create_before_destroy = true
+    ignore_changes = [ all ]
+    prevent_destroy = true
   }
   name      = var.APP_SHORTNAME
   tags      = ["terraform", "docker"]
@@ -37,21 +21,9 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
     datastore_id = var.DATASTORE_ID
     file_id      = proxmox_virtual_environment_download_file.ubuntu_cloud_image.id
     interface    = "scsi0"
-    size         = 32
+    size         = var.DISK_SIZE
     discard      = "on"
     ssd          = true
-  }
-  dynamic "disk" {
-    for_each = { for idx, val in proxmox_virtual_environment_vm.data_vm.disk : idx => val }
-    iterator = data_disk
-    content {
-      datastore_id      = data_disk.value["datastore_id"]
-      path_in_datastore = data_disk.value["path_in_datastore"]
-      file_format       = data_disk.value["file_format"]
-      size              = data_disk.value["size"]
-      # assign from scsi2 and up
-      interface         = "scsi${data_disk.key + 2}"
-    }
   }
   initialization {
     ip_config {
@@ -77,6 +49,9 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
 }
 
 resource "proxmox_virtual_environment_download_file" "ubuntu_cloud_image" {
+  lifecycle {
+    ignore_changes = [ all ]
+  }
   content_type = "iso"
   datastore_id = "local"
   node_name    = "pve"
