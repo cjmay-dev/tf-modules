@@ -1,11 +1,11 @@
 locals {
-  fqdn = "${var.APP_SHORTNAME}.${var.DOMAIN}"
+  subdomain = "${trimsuffix(var.APP_SHORTNAME, "-${var.ENV_SLUG}")}"
 }
 
 # New project in Infisical for app secrets
 resource "infisical_project" "app_secrets" {
-  name = local.fqdn
-  slug = replace(local.fqdn, ".", "-")
+  name = "${local.subdomain}.${var.DOMAIN}"
+  slug = "${local.subdomain}-${var.ORG_SHORTNAME}"
 }
 
 resource "infisical_project_user" "admin_user" {

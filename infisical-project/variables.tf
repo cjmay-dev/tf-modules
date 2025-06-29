@@ -7,6 +7,11 @@ variable "APP_SHORTNAME" {
   type        = string
 }
 
+variable "ORG_SHORTNAME" {
+  description = "The short name of the organization"
+  type        = string
+}
+
 variable "DOMAIN" {
   description = "The domain for where the app will be hosted"
   type        = string
