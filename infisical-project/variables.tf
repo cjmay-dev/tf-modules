@@ -22,6 +22,11 @@ variable "ENV_SLUG" {
   type        = string
 }
 
+variable "GITHUB_REPOSITORY" {
+  description = "The GitHub repository in the format 'owner/repo'"
+  type        = string
+}
+
 variable "INFISICAL_ADMIN_USER" {
   description = "The username of the admin user in Infisical"
   type        = string

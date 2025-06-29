@@ -1,6 +1,5 @@
 locals {
   subdomain = "${trimsuffix(var.APP_SHORTNAME, "-${var.ENV_SLUG}")}"
-  github_repo = "${var.ORG_SHORTNAME}/${local.subdomain}"
 }
 
 # New project in Infisical for app secrets
@@ -12,7 +11,7 @@ resource "infisical_project" "app_secrets" {
   }
   name = "${local.subdomain}.${var.DOMAIN}"
   slug = "${local.subdomain}-${var.ORG_SHORTNAME}"
-  description = "Application secrets for https://github.com/${local.github_repo}"
+  description = "Application secrets for https://github.com/${var.GITHUB_REPOSITORY}"
 }
 
 resource "infisical_project_user" "admin_user" {
@@ -44,7 +43,7 @@ resource "infisical_secret" "project_id" {
 
 resource "infisical_secret" "github_repo" {
   name         = "GITHUB_REPOSITORY"
-  value        = local.github_repo
+  value        = var.GITHUB_REPOSITORY
   env_slug     = var.ENV_SLUG
   workspace_id = infisical_project.app_secrets.id
   folder_path  = "/"
