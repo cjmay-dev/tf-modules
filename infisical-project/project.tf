@@ -6,6 +6,7 @@ locals {
 resource "infisical_project" "app_secrets" {
   name = "${local.subdomain}.${var.DOMAIN}"
   slug = "${local.subdomain}-${var.ORG_SHORTNAME}"
+  description = "https://github.com/${var.ORG_SHORTNAME}/${local.subdomain} application secrets"
 }
 
 resource "infisical_project_user" "admin_user" {
