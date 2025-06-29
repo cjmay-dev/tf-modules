@@ -40,11 +40,3 @@ resource "infisical_secret" "project_id" {
   workspace_id = infisical_project.app_secrets.id
   folder_path  = "/"
 }
-
-resource "infisical_secret" "github_repo" {
-  name         = "GITHUB_REPOSITORY"
-  value        = var.GITHUB_REPOSITORY
-  env_slug     = var.ENV_SLUG
-  workspace_id = infisical_project.app_secrets.id
-  folder_path  = "/"
-}
