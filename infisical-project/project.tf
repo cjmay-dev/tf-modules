@@ -27,3 +27,11 @@ resource "infisical_secret" "app_secrets" {
   workspace_id = infisical_project.app_secrets.id
   folder_path  = "/"
 }
+
+resource "infisical_secret" "project_id" {
+  name         = "INFISICAL_PROJECT_ID"
+  value        = infisical_project.app_secrets.id
+  env_slug     = var.ENV_SLUG
+  workspace_id = infisical_project.app_secrets.id
+  folder_path  = "/"
+}
