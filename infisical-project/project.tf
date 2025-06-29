@@ -4,9 +4,14 @@ locals {
 
 # New project in Infisical for app secrets
 resource "infisical_project" "app_secrets" {
+  lifecycle {
+    ignore_changes = [
+      kms_secret_manager_key_id
+    ]
+  }
   name = "${local.subdomain}.${var.DOMAIN}"
   slug = "${local.subdomain}-${var.ORG_SHORTNAME}"
-  description = "https://github.com/${var.ORG_SHORTNAME}/${local.subdomain} application secrets"
+  description = "Application secrets for https://github.com/${var.ORG_SHORTNAME}/${local.subdomain}"
 }
 
 resource "infisical_project_user" "admin_user" {
