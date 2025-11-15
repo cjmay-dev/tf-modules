@@ -52,3 +52,8 @@ variable "NETWORK_BRIDGE" {
     description = "Name of the network bridge to use for the VM"
     type        = string
 }
+
+variable "RESOURCE_POOL_ID" {
+    description = "ID of the resource pool where the VM will be placed"
+    type        = string
+}

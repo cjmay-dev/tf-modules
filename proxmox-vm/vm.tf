@@ -6,6 +6,7 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
   name      = var.APP_SHORTNAME
   tags      = ["terraform", "docker"]
   node_name = var.NODE_NAME
+  pool_id = var.RESOURCE_POOL_ID
   agent {
     enabled = true
   }
